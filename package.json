@@ -1,0 +1,15 @@
+{
+  "name": "barberia-central",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistema web de gestión de barbería basado en el SRS V1",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test --test-concurrency=1 tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
