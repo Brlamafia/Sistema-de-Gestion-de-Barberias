@@ -1,0 +1,19 @@
+TAP version 13
+ok 1 - flujo completo: registrar, autenticar, reservar y pagar
+ok 2 - integración: impide dos reservas para el mismo barbero y horario
+ok 3 - integración: el panel administrativo exige el rol correcto
+ok 4 - la contraseña se almacena como hash con sal
+ok 5 - la verificación acepta la contraseña correcta
+ok 6 - la verificación rechaza una contraseña incorrecta
+ok 7 - la política exige longitud, mayúscula, minúscula y número
+ok 8 - las funciones de tiempo convierten sin pérdida
+
+tests 8
+pass 8
+fail 0
+cancelled 0
+skipped 0
+todo 0
+
+Entorno: Node.js v24.19.0
+Fecha de ejecución: 2026-10-19
