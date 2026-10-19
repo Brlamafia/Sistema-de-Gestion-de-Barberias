@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Reserva servicios de barbería y administra tus citas en línea.">
+  <title>Barbería Central</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Barbería Central, inicio"><span class="brand-mark">BC</span><span>Barbería<br><b>Central</b></span></a>
+    <button class="menu-button" id="menuButton" aria-label="Abrir menú" aria-expanded="false">Menú</button>
+    <nav id="nav"><a href="#inicio">Inicio</a><a href="#servicios">Servicios</a><a href="#reservar">Reservar</a><a href="#contacto">Contacto</a><button class="nav-login" data-action="open-auth">Ingresar</button><button class="nav-user hidden" id="userButton"></button></nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <p class="eyebrow">Precisión, tiempo y estilo</p>
+        <h1>Tu corte.<br><em>Tu momento.</em></h1>
+        <p>Consulta disponibilidad real, elige a tu barbero y reserva sin llamadas ni esperas.</p>
+        <div class="hero-actions"><a class="button primary" href="#reservar">Reservar ahora</a><a class="button ghost" href="#servicios">Ver servicios</a></div>
+        <div class="hero-facts"><span><b>6 días</b> por semana</span><span><b>Reserva</b> en minutos</span><span><b>Pago</b> seguro y claro</span></div>
+      </div>
+      <div class="open-card"><span class="pulse"></span><div><small>Hoy</small><strong>Abierto hasta las 6:00 p. m.</strong></div></div>
+    </section>
+
+    <section class="section services" id="servicios">
+      <div class="section-heading"><div><p class="eyebrow">Servicios</p><h2>Elige el acabado que buscas</h2></div><p>Precios claros, duración visible y una experiencia cuidada desde la reserva.</p></div>
+      <div class="service-grid" id="serviceGrid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+    </section>
+
+    <section class="section booking" id="reservar">
+      <div class="booking-intro"><p class="eyebrow">Agenda en línea</p><h2>Encuentra tu próximo espacio</h2><p>Los horarios se calculan según la jornada del barbero, la duración del servicio y las citas existentes.</p><ol><li>Selecciona servicio y barbero.</li><li>Elige fecha y horario disponible.</li><li>Confirma desde tu cuenta.</li></ol></div>
+      <form class="booking-panel" id="bookingForm">
+        <div class="step-label"><span>01</span> Preferencias</div>
+        <label>Servicio<select id="serviceSelect" required><option value="">Selecciona un servicio</option></select></label>
+        <label>Barbero<select id="barberSelect" required><option value="">Selecciona un barbero</option></select></label>
+        <label>Fecha<input id="dateInput" type="date" required></label>
+        <div class="step-label"><span>02</span> Horarios disponibles</div>
+        <div class="slots empty" id="slots">Selecciona servicio, barbero y fecha.</div>
+        <label>Nota opcional<textarea id="notesInput" maxlength="240" placeholder="Preferencias para tu servicio"></textarea></label>
+        <button class="button primary wide" type="submit">Confirmar reserva</button>
+        <p class="form-note">Necesitas iniciar sesión como cliente para confirmar.</p>
+      </form>
+    </section>
+
+    <section class="section account hidden" id="accountSection">
+      <div class="section-heading"><div><p class="eyebrow">Mi cuenta</p><h2 id="accountTitle">Mis citas</h2></div><button class="button ghost" data-action="logout">Cerrar sesión</button></div>
+      <div id="accountContent"></div>
+    </section>
+
+    <section class="contact" id="contacto">
+      <div><p class="eyebrow">Contacto</p><h2>Nos vemos en la silla</h2><p>Av. Principal 123, Santo Domingo<br>809-555-0147<br>hola@cortecentral.do</p></div>
+      <div class="hours"><span>Lunes a viernes</span><b>9:00 a. m. - 6:00 p. m.</b><span>Sábado</span><b>9:00 a. m. - 3:00 p. m.</b><span>Domingo</span><b>Cerrado</b></div>
+    </section>
+  </main>
+
+  <footer><div class="brand"><span class="brand-mark">BC</span><span>Barbería <b>Central</b></span></div><p>Proyecto académico basado en el SRS V1.</p><p>© 2026</p></footer>
+
+  <dialog id="authDialog">
+    <button class="dialog-close" data-action="close-auth" aria-label="Cerrar">×</button>
+    <p class="eyebrow">Acceso</p><h2 id="authTitle">Iniciar sesión</h2>
+    <div class="auth-tabs"><button class="active" data-auth="login">Ingresar</button><button data-auth="register">Crear cuenta</button></div>
+    <form id="loginForm"><label>Correo<input type="email" name="email" required placeholder="cliente@cortecentral.do"></label><label>Contraseña<input type="password" name="password" required></label><button class="button primary wide">Ingresar</button><p class="demo-note">Demo cliente: cliente@cortecentral.do / Cliente123!</p><p class="demo-note">Demo admin: admin@cortecentral.do / Admin123!</p></form>
+    <form id="registerForm" class="hidden"><label>Nombre<input name="name" required minlength="2"></label><label>Correo<input name="email" type="email" required></label><label>Teléfono<input name="phone"></label><label>Contraseña<input name="password" type="password" required minlength="8" placeholder="Mayúscula, minúscula y número"></label><button class="button primary wide">Crear cuenta</button></form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
