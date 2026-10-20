@@ -2,6 +2,10 @@
 
 Aplicación multi-barbería basada en el SRS V1 y ampliada mediante la solicitud de cambio de octubre de 2026. Los clientes reservan sin crear una cuenta. El personal interno utiliza acceso por roles.
 
+## Repositorio
+
+Código fuente e historial de commits: https://github.com/Brlamafia/barberia-central
+
 ## Arquitectura
 
 Monolito modular en capas con Node.js 24, servidor HTTP nativo, SQLite, HTML, CSS y JavaScript. No requiere instalar dependencias externas. La transacción `BEGIN IMMEDIATE` vuelve a verificar la disponibilidad antes de insertar una reserva y evita solapamientos.
