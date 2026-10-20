@@ -1,10 +1,10 @@
-# Plataforma de Gestión de Barberías
+# Sistema de Gestión de Barberías
 
 Aplicación multi-barbería basada en el SRS V1 y ampliada mediante la solicitud de cambio de octubre de 2026. Los clientes reservan sin crear una cuenta. El personal interno utiliza acceso por roles.
 
 ## Repositorio
 
-Código fuente e historial de commits: https://github.com/Brlamafia/barberia-central
+Código fuente e historial de commits: https://github.com/Brlamafia/Sistema-de-Gestion-de-Barberias
 
 ## Arquitectura
 
@@ -54,7 +54,7 @@ La suite contiene 10 pruebas: cinco unitarias y cinco de integración. Cubre res
 ## Estructura
 
 ```text
-barberia-central/
+Sistema-de-Gestion-de-Barberias/
 ├─ public/              interfaz responsive
 ├─ src/                 servidor, seguridad, base de datos y reglas
 ├─ tests/               pruebas unitarias y de integración
