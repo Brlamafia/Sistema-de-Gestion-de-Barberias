@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Reserva servicios de barbería y administra tus citas en línea.">
+  <meta name="description" content="Reserva sin crear cuenta y gestiona barberías, transferencias y turnos con QFlow.">
   <title>Barbería Central</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
@@ -11,61 +11,72 @@
   <header class="site-header">
     <a class="brand" href="#inicio" aria-label="Barbería Central, inicio"><span class="brand-mark">BC</span><span>Barbería<br><b>Central</b></span></a>
     <button class="menu-button" id="menuButton" aria-label="Abrir menú" aria-expanded="false">Menú</button>
-    <nav id="nav"><a href="#inicio">Inicio</a><a href="#servicios">Servicios</a><a href="#reservar">Reservar</a><a href="#contacto">Contacto</a><button class="nav-login" data-action="open-auth">Ingresar</button><button class="nav-user hidden" id="userButton"></button></nav>
+    <nav id="nav"><a href="#inicio">Inicio</a><a href="#servicios">Servicios</a><a href="#reservar">Reservar</a><a href="#contacto">Contacto</a><button class="nav-login" data-action="open-auth">Acceso del personal</button><button class="nav-user hidden" id="userButton"></button></nav>
   </header>
 
   <main>
     <section class="hero" id="inicio">
       <div class="hero-shade"></div>
       <div class="hero-content">
-        <p class="eyebrow">Precisión, tiempo y estilo</p>
+        <p class="eyebrow">Reserva directa y sin cuenta</p>
         <h1>Tu corte.<br><em>Tu momento.</em></h1>
-        <p>Consulta disponibilidad real, elige a tu barbero y reserva sin llamadas ni esperas.</p>
+        <p>Escribe tu nombre, elige barbería, servicio, barbero y horario. La confirmación se realiza después de validar tu transferencia.</p>
         <div class="hero-actions"><a class="button primary" href="#reservar">Reservar ahora</a><a class="button ghost" href="#servicios">Ver servicios</a></div>
-        <div class="hero-facts"><span><b>6 días</b> por semana</span><span><b>Reserva</b> en minutos</span><span><b>Pago</b> seguro y claro</span></div>
+        <div class="hero-facts"><span><b>Sin registro</b> para clientes</span><span><b>Transferencia</b> verificable</span><span><b>QFlow</b> en la barbería</span></div>
       </div>
-      <div class="open-card"><span class="pulse"></span><div><small>Hoy</small><strong>Abierto hasta las 6:00 p. m.</strong></div></div>
+      <div class="open-card"><span class="pulse"></span><div><small>Reservas</small><strong>Confirmadas por el dueño</strong></div></div>
     </section>
 
     <section class="section services" id="servicios">
-      <div class="section-heading"><div><p class="eyebrow">Servicios</p><h2>Elige el acabado que buscas</h2></div><p>Precios claros, duración visible y una experiencia cuidada desde la reserva.</p></div>
+      <div class="section-heading"><div><p class="eyebrow">Servicios</p><h2>Elige el acabado que buscas</h2></div><p>Selecciona una barbería para consultar su catálogo, precios y barberos.</p></div>
+      <label class="shop-picker">Barbería<select id="shopSelect"><option value="">Selecciona una barbería</option></select></label>
       <div class="service-grid" id="serviceGrid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
     </section>
 
     <section class="section booking" id="reservar">
-      <div class="booking-intro"><p class="eyebrow">Agenda en línea</p><h2>Encuentra tu próximo espacio</h2><p>Los horarios se calculan según la jornada del barbero, la duración del servicio y las citas existentes.</p><ol><li>Selecciona servicio y barbero.</li><li>Elige fecha y horario disponible.</li><li>Confirma desde tu cuenta.</li></ol></div>
+      <div class="booking-intro"><p class="eyebrow">Agenda sin cuenta</p><h2>Reserva en cuatro pasos</h2><p>La hora queda apartada mientras el dueño valida la referencia de transferencia.</p><ol><li>Escribe tu nombre y teléfono.</li><li>Selecciona servicio, barbero y horario.</li><li>Realiza la transferencia indicada.</li><li>Espera la confirmación de la barbería.</li></ol><div class="transfer-card" id="transferInfo">Selecciona una barbería para ver sus datos de transferencia.</div></div>
       <form class="booking-panel" id="bookingForm">
-        <div class="step-label"><span>01</span> Preferencias</div>
+        <div class="step-label"><span>01</span> Tus datos</div>
+        <label>Nombre completo<input id="guestName" required minlength="2" maxlength="80" placeholder="Tu nombre"></label>
+        <label>Teléfono<input id="guestPhone" required minlength="7" maxlength="24" placeholder="809-555-0000"></label>
+        <label>Correo opcional<input id="guestEmail" type="email" maxlength="120" placeholder="nombre@correo.com"></label>
+        <div class="step-label"><span>02</span> Preferencias</div>
         <label>Servicio<select id="serviceSelect" required><option value="">Selecciona un servicio</option></select></label>
         <label>Barbero<select id="barberSelect" required><option value="">Selecciona un barbero</option></select></label>
         <label>Fecha<input id="dateInput" type="date" required></label>
-        <div class="step-label"><span>02</span> Horarios disponibles</div>
-        <div class="slots empty" id="slots">Selecciona servicio, barbero y fecha.</div>
+        <div class="step-label"><span>03</span> Horarios disponibles</div>
+        <div class="slots empty" id="slots">Selecciona barbería, servicio, barbero y fecha.</div>
+        <label>Referencia de transferencia<input id="transferReference" required minlength="4" maxlength="80" placeholder="Número o descripción de la transferencia"></label>
         <label>Nota opcional<textarea id="notesInput" maxlength="240" placeholder="Preferencias para tu servicio"></textarea></label>
-        <button class="button primary wide" type="submit">Confirmar reserva</button>
-        <p class="form-note">Necesitas iniciar sesión como cliente para confirmar.</p>
+        <button class="button primary wide" type="submit">Enviar reserva para confirmación</button>
+        <p class="form-note">No necesitas crear una cuenta. Conserva el código que recibirás.</p>
       </form>
     </section>
 
+    <section class="section lookup">
+      <div class="section-heading"><div><p class="eyebrow">Consulta</p><h2>Revisa el estado de tu reserva</h2></div></div>
+      <form class="lookup-form" id="lookupForm"><input name="code" required placeholder="Código BC-00001"><input name="phone" required placeholder="Teléfono usado en la reserva"><button class="button ghost">Consultar</button></form>
+      <div id="lookupResult"></div>
+    </section>
+
     <section class="section account hidden" id="accountSection">
-      <div class="section-heading"><div><p class="eyebrow">Mi cuenta</p><h2 id="accountTitle">Mis citas</h2></div><button class="button ghost" data-action="logout">Cerrar sesión</button></div>
+      <div class="section-heading"><div><p class="eyebrow" id="accountEyebrow">Operaciones</p><h2 id="accountTitle">Panel</h2></div><button class="button ghost" data-action="logout">Cerrar sesión</button></div>
       <div id="accountContent"></div>
     </section>
 
     <section class="contact" id="contacto">
-      <div><p class="eyebrow">Contacto</p><h2>Nos vemos en la silla</h2><p>Av. Principal 123, Santo Domingo<br>809-555-0147<br>hola@cortecentral.do</p></div>
-      <div class="hours"><span>Lunes a viernes</span><b>9:00 a. m. - 6:00 p. m.</b><span>Sábado</span><b>9:00 a. m. - 3:00 p. m.</b><span>Domingo</span><b>Cerrado</b></div>
+      <div><p class="eyebrow">Plataforma</p><h2>Reservas claras para cada barbería</h2><p>Catálogo, disponibilidad, transferencias y operación QFlow en un solo lugar.</p></div>
+      <div class="hours"><span>Cliente</span><b>Reserva sin cuenta</b><span>Dueño</span><b>Confirma pagos y citas</b><span>Barbero</span><b>Gestiona la cola QFlow</b></div>
     </section>
   </main>
 
-  <footer><div class="brand"><span class="brand-mark">BC</span><span>Barbería <b>Central</b></span></div><p>Proyecto académico basado en el SRS V1.</p><p>© 2026</p></footer>
+  <footer><div class="brand"><span class="brand-mark">BC</span><span>Barbería <b>Central</b></span></div><p>Plataforma multi-barbería basada en el SRS V1 y la solicitud de cambio aprobada.</p><p>© 2026</p></footer>
 
   <dialog id="authDialog">
     <button class="dialog-close" data-action="close-auth" aria-label="Cerrar">×</button>
-    <p class="eyebrow">Acceso</p><h2 id="authTitle">Iniciar sesión</h2>
-    <div class="auth-tabs"><button class="active" data-auth="login">Ingresar</button><button data-auth="register">Crear cuenta</button></div>
-    <form id="loginForm"><label>Correo<input type="email" name="email" required placeholder="cliente@cortecentral.do"></label><label>Contraseña<input type="password" name="password" required></label><button class="button primary wide">Ingresar</button><p class="demo-note">Demo cliente: cliente@cortecentral.do / Cliente123!</p><p class="demo-note">Demo admin: admin@cortecentral.do / Admin123!</p></form>
-    <form id="registerForm" class="hidden"><label>Nombre<input name="name" required minlength="2"></label><label>Correo<input name="email" type="email" required></label><label>Teléfono<input name="phone"></label><label>Contraseña<input name="password" type="password" required minlength="8" placeholder="Mayúscula, minúscula y número"></label><button class="button primary wide">Crear cuenta</button></form>
+    <p class="eyebrow">Acceso restringido</p><h2>Personal autorizado</h2>
+    <p>Los clientes no necesitan iniciar sesión. Este acceso es exclusivo para dueños y barberos.</p>
+    <form id="loginForm"><label>Correo<input type="email" name="email" required placeholder="dueno@barberia.local"></label><label>Contraseña<input type="password" name="password" required></label><button class="button primary wide">Ingresar</button><p class="demo-note">Dueño: dueno@barberia.local / Dueno123!</p><p class="demo-note">Barbero: barbero@barberia.local / Barbero123!</p><p class="demo-note">Plataforma: plataforma@barberia.local / Plataforma123!</p></form>
   </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script type="module" src="/app.js"></script>
