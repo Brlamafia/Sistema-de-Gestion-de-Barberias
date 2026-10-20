@@ -1,42 +1,25 @@
-# Barbería Central
+# Plataforma de Gestión de Barberías
 
-Aplicación web completa para gestionar servicios, disponibilidad, citas y pagos de una barbería. La implementación parte del **SRS V1 - Sistema de Gestión de Barbería** y cubre los requisitos RF-01 a RF-15.
+Aplicación multi-barbería basada en el SRS V1 y ampliada mediante la solicitud de cambio de octubre de 2026. Los clientes reservan sin crear una cuenta. El personal interno utiliza acceso por roles.
 
 ## Arquitectura
 
-Se usa un monolito modular en capas con Node.js 24 y SQLite. La elección mantiene el proyecto sencillo para fines académicos, evita infraestructura externa y permite aplicar una transacción `BEGIN IMMEDIATE` al reservar o reprogramar. Esto impide que dos solicitudes concurrentes asignen al mismo barbero en intervalos solapados.
+Monolito modular en capas con Node.js 24, servidor HTTP nativo, SQLite, HTML, CSS y JavaScript. No requiere instalar dependencias externas. La transacción `BEGIN IMMEDIATE` vuelve a verificar la disponibilidad antes de insertar una reserva y evita solapamientos.
 
-```text
-Navegador responsive
-        │ HTTP + JSON
-Servidor Node.js
-  ├─ autenticación y autorización
-  ├─ servicios y barberos
-  ├─ disponibilidad y citas
-  ├─ pagos
-  └─ administración
-        │ SQL transaccional
-      SQLite
-```
+## Roles
 
-No se usan paquetes externos. El servidor HTTP, el cifrado `scrypt`, las pruebas y SQLite forman parte de Node.js 24.
+- **Cliente invitado:** escribe nombre y teléfono, selecciona barbería, corte, barbero, fecha y hora, e indica la referencia de transferencia.
+- **Dueño de barbería:** único rol con acceso al panel administrativo de su barbería. Confirma o rechaza transferencias y reservas, y gestiona servicios, barberos y horarios.
+- **Barbero:** accede únicamente a QFlow para iniciar y completar las reservas que el dueño confirmó.
+- **Dueño de plataforma:** administra barberías activas, usuarios, roles y cualquier barbería desde el panel global.
 
-## Funcionalidades
+## Flujo de reserva
 
-- Registro, inicio y cierre de sesión.
-- Contraseñas almacenadas con `scrypt`, sal aleatoria y comparación segura.
-- Catálogo activo de servicios con precio y duración.
-- Disponibilidad por barbero y fecha.
-- Reserva, historial, cancelación y reprogramación de citas.
-- Prevención de reservas solapadas dentro de una transacción.
-- Registro de pagos en efectivo, transferencia o tarjeta demostrativa.
-- Agenda del barbero.
-- Panel administrativo para servicios, barberos, horarios, citas, clientes y pagos.
-- Interfaz adaptable a móvil y escritorio.
-
-## Requisitos
-
-- Node.js 24 o superior.
+1. El cliente reserva sin registrarse.
+2. El sistema crea la reserva con estado `awaiting_confirmation` y un pago por transferencia `pending`.
+3. El dueño revisa la referencia y confirma o rechaza.
+4. Al confirmar, la transferencia queda `verified` y la reserva aparece en QFlow.
+5. El barbero cambia el estado a `in_service` y luego `completed`.
 
 ## Ejecución
 
@@ -44,17 +27,17 @@ No se usan paquetes externos. El servidor HTTP, el cifrado `scrypt`, las pruebas
 npm start
 ```
 
-Abre `http://127.0.0.1:3000`. La base se crea automáticamente en `data/barberia.db` con datos demostrativos.
+Abrir `http://127.0.0.1:3000`. La base se crea automáticamente en `data/barberia.db`.
 
-### Cuentas de demostración
+## Credenciales de demostración
 
 | Rol | Correo | Contraseña |
-| --- | --- | --- |
-| Cliente | cliente@cortecentral.do | Cliente123! |
-| Administrador | admin@cortecentral.do | Admin123! |
-| Barbero | barbero@cortecentral.do | Barber123! |
+|---|---|---|
+| Dueño de plataforma | plataforma@barberia.local | Plataforma123! |
+| Dueño de barbería | dueno@barberia.local | Dueno123! |
+| Barbero | barbero@barberia.local | Barbero123! |
 
-Estas credenciales son solo para demostración y deben cambiarse antes de un despliegue real.
+Los clientes no tienen credenciales porque no necesitan crear cuenta.
 
 ## Pruebas
 
@@ -62,27 +45,19 @@ Estas credenciales son solo para demostración y deben cambiarse antes de un des
 npm test
 ```
 
-Las pruebas cubren seguridad de contraseñas, validación de política, conversión de horarios, flujo de registro-reserva-pago, rechazo de citas solapadas y control de acceso al panel administrativo.
+La suite contiene 10 pruebas: cinco unitarias y cinco de integración. Cubre reserva anónima, consulta por código y teléfono, confirmación de transferencia, QFlow, bloqueo de solapamientos, separación de roles y administración multi-barbería.
 
 ## Estructura
 
 ```text
 barberia-central/
-├─ public/              interfaz web responsive
-├─ src/                 servidor, rutas, seguridad y persistencia
-├─ tests/               pruebas unitarias e integración
-├─ data/                base SQLite local generada al iniciar
-├─ docs/                análisis, diseño y reporte de pruebas
-└─ README.md
+├─ public/              interfaz responsive
+├─ src/                 servidor, seguridad, base de datos y reglas
+├─ tests/               pruebas unitarias y de integración
+├─ docs/                análisis, diseño, reporte y evidencias
+└─ data/                SQLite local generado en ejecución
 ```
 
-## Supuestos y límites
+## Alcance externo
 
-- La marca, dirección y teléfonos son datos demostrativos porque el SRS no define una identidad comercial concreta.
-- Los horarios avanzan en bloques de 30 minutos; la duración de cada servicio determina cuántos bloques ocupa.
-- `card_demo` simula una aprobación y no procesa dinero real. El SRS declara que los pagos en línea dependen de un proveedor externo.
-- Nómina, contabilidad e inventario avanzado quedan fuera del alcance, tal como indica el SRS.
-
-## Despliegue recomendado
-
-Para producción se recomienda ejecutar detrás de HTTPS, definir copias de seguridad de SQLite o migrar a PostgreSQL si aumenta la concurrencia, reemplazar las cuentas demo y conectar un proveedor de pagos aprobado. El código actual funciona localmente sin configuración adicional.
+La transferencia se valida manualmente mediante su referencia. La conexión automática con bancos, comprobantes adjuntos, notificaciones y despliegue público requieren servicios externos y no se inventan como parte del SRS original.
