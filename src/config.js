@@ -6,5 +6,5 @@ export const ROOT = path.resolve(here, '..');
 export const PUBLIC_DIR = path.join(ROOT, 'public');
 export const DB_PATH = process.env.DB_PATH || path.join(ROOT, 'data', 'barberia.db');
 export const PORT = Number(process.env.PORT || 3000);
-export const SESSION_HOURS = 12;
-export const SLOT_MINUTES = 30;
+export const SESSION_HOURS = Number(process.env.SESSION_HOURS || 12);
+export const SLOT_MINUTES = Number(process.env.SLOT_MINUTES || 30);

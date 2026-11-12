@@ -51,6 +51,15 @@ npm test
 
 La suite contiene 10 pruebas: cinco unitarias y cinco de integración. Cubre reserva anónima, consulta por código y teléfono, confirmación de transferencia, QFlow, bloqueo de solapamientos, separación de roles y administración multi-barbería.
 
+## Documentación
+
+- `docs/ANALISIS-SRS.md`: roles, requisitos y reglas de negocio.
+- `docs/DISENO.md`: arquitectura, entidades y controles de acceso.
+- `docs/REPORTE-PRUEBAS.md`: plan, resultados, incidencias y evidencias.
+- `docs/ENTREGABLE-5-CODIGO-COMPLETO.md`: matriz de cumplimiento del código final.
+- `docs/MANUAL-TECNICO.md`: instalación, configuración, arquitectura y pruebas.
+- `docs/MANUAL-USUARIO.md`: guía de clientes, dueños, barberos y dueño de plataforma.
+
 ## Estructura
 
 ```text
